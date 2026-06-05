@@ -1,93 +1,188 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>WanderWay | Tailored Travel Packages</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <!-- Font Awesome 6 (free icons) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- External CSS -->
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<nav class="navbar">
-  <div class="container nav-container">
-    <div class="logo">
-      <i class="fas fa-globe-americas"></i> WanderWay
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WanderWay | Tailored Travel Packages</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Loading Spinner Overlay -->
+    <div id="loadingSpinner" class="spinner-overlay hidden">
+      <div class="spinner"></div>
+      <p>Processing your request...</p>
     </div>
-    <ul class="nav-links">
-      <li><a href="#" class="active">Packages</a></li>
-      <li><a href="#booking-form">Book Now</a></li>
-      <li><a href="#">Destinations</a></li>
-    </ul>
-  </div>
-</nav>
 
-<main class="container">
-  <!-- Packages Section -->
-  <section id="packages">
-    <h2 class="section-title"><i class="fas fa-box-open"></i> Curated Escapes</h2>
-    <div class="packages-grid" id="packagesGrid">
-      <!-- dynamic JS packages will be injected here -->
-    </div>
-  </section>
+    <header class="navbar">
+      <div class="container nav-container">
+        <div class="logo"><i class="fas fa-compass"></i> WanderWay</div>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="#packages">Packages</a></li>
+            <li><a href="#booking-history-toggle">My Bookings</a></li>
+            <li><a href="#booking-form">Book Now</a></li>
+            <li>
+              <button
+                id="themeToggle"
+                class="theme-btn"
+                aria-label="Toggle Dark Mode"
+              >
+                <i class="fas fa-moon"></i>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
 
-  <!-- Booking Form Section (with dynamic content) -->
-  <section id="booking-form" class="booking-section">
-    <h2 class="section-title" style="margin-bottom: 1.8rem;"><i class="fas fa-calendar-check"></i> Plan your journey</h2>
-    <form id="travelBookingForm">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="fullName"><i class="fas fa-user"></i> Full Name *</label>
-          <input type="text" id="fullName" placeholder="Alex Morgan" required>
-        </div>
-        <div class="form-group">
-          <label for="email"><i class="fas fa-envelope"></i> Email *</label>
-          <input type="email" id="email" placeholder="hello@wander.com" required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="packageSelect"><i class="fas fa-suitcase-rolling"></i> Select Package *</label>
-          <select id="packageSelect" required>
-            <option value="">-- Choose your adventure --</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="travelers"><i class="fas fa-users"></i> Travelers</label>
-          <input type="number" id="travelers" min="1" max="12" value="2">
-        </div>
-        <div class="form-group">
-          <label for="departureDate"><i class="fas fa-calendar-alt"></i> Departure Date *</label>
-          <input type="date" id="departureDate" required>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="specialRequests"><i class="fas fa-comment-dots"></i> Special requests</label>
-          <textarea id="specialRequests" rows="2" placeholder="Dietary, room preferences, etc."></textarea>
-        </div>
-      </div>
-      <div class="form-row">
-        <button type="submit" class="btn-primary"><i class="fas fa-ticket-alt"></i> Confirm Booking</button>
-      </div>
-      <!-- Dynamic live summary (JS updates) -->
-      <div class="booking-summary" id="liveSummaryPanel">
-        <i class="fas fa-info-circle"></i> <strong>Live booking summary</strong>
-        <div id="dynamicSummary">Select a package and fill details → real-time preview</div>
-      </div>
-    </form>
-  </section>
-</main>
+    <main class="container">
+      <section class="hero">
+        <h1 class="section-title">Curated Escapes</h1>
+        <p class="hero-subtitle">
+          Plan your journey with our exclusive, hand-picked travel packages.
+        </p>
+      </section>
 
-<footer>
-  <p><i class="fas fa-map-marked-alt"></i> WanderWay — unlock authentic journeys. ✨ Dynamic content powered by JS</p>
-</footer>
+      <!-- Search, Filter & Sort Controls -->
+      <section id="packages" class="controls-section">
+        <div class="controls-grid">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search destinations (e.g., Maldives)..."
+            />
+          </div>
+          <div class="filter-box">
+            <select id="categoryFilter">
+              <option value="all">All Categories</option>
+              <option value="Best Seller">Best Seller</option>
+              <option value="Trending">Trending</option>
+              <option value="Cultural">Cultural</option>
+              <option value="Wildlife">Wildlife</option>
+            </select>
+          </div>
+          <div class="sort-box">
+            <select id="sortSelect">
+              <option value="default">Sort By: Default</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="duration-asc">Duration: Shortest First</option>
+            </select>
+          </div>
+        </div>
+      </section>
 
-<!-- External JavaScript -->
-<script src="script.js"></script>
-</body>
+      <section class="packages-section">
+        <div id="packagesGrid" class="packages-grid">
+          <!-- Packages injected by JS -->
+        </div>
+        <div id="noResults" class="no-results hidden">
+          <i class="fas fa-search"></i>
+          <p>No packages match your criteria.</p>
+        </div>
+      </section>
+
+      <!-- Booking History Section -->
+      <section id="booking-history" class="booking-history-section hidden">
+        <h2 class="section-title">Your Booking History</h2>
+        <div id="historyList" class="history-list">
+          <!-- History items injected by JS -->
+        </div>
+      </section>
+
+      <!-- Booking Form -->
+      <section id="booking-form" class="booking-section">
+        <h2 class="section-title">Secure Your Adventure</h2>
+        <form id="travelBookingForm" class="booking-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fullName">Full Name *</label>
+              <input
+                type="text"
+                id="fullName"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="john@example.com"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="packageSelect">Select Package *</label>
+              <select id="packageSelect" required>
+                <option value="">-- Choose your adventure --</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="travelers">Travelers *</label>
+              <input
+                type="number"
+                id="travelers"
+                min="1"
+                max="12"
+                value="1"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="departureDate">Departure Date *</label>
+              <input type="date" id="departureDate" required />
+            </div>
+            <div class="form-group">
+              <label for="specialRequests">Special Requests</label>
+              <input
+                type="text"
+                id="specialRequests"
+                placeholder="Dietary needs, accessibility, etc."
+              />
+            </div>
+          </div>
+
+          <div class="booking-summary">
+            <h3><i class="fas fa-receipt"></i> Live Booking Summary</h3>
+            <div id="dynamicSummary">
+              <i class="fas fa-hand-point-right"></i> Please select a travel
+              package.
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-paper-plane"></i> Confirm Booking
+          </button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2026 WanderWay. Unlock authentic journeys.</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
 </html>
